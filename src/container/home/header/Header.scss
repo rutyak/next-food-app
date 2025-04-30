@@ -1,0 +1,67 @@
+.header {
+  position: relative;
+  border: 1px solid gray;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem 1rem 1.5rem;
+  height: 263px;
+  width: 100%;
+  background-image: url('../../../assets/back-5.jpg');
+  background-repeat: no-repeat;
+  background-attachment: fixed; 
+  background-size: 100% 77%;
+
+  &-slogan{
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 3px;
+  }
+}
+
+
+.title{
+  h2{
+    text-align: center;    
+    margin-top: 41px;
+    font-family: "Ubuntu", sans-serif;
+    font-weight: 700;
+    font-style: italic;
+    color: #e8cbcb;
+  }
+}
+
+
+@media (max-width: 780px) {
+   .header-slogan{
+      p{
+        visibility: hidden;
+      }
+   }
+}
+
+@media (max-width: 480px) {
+  .header{
+    width: calc(100% + 51px);
+    background-size: 215% 75%;
+  }
+
+  .header-slogan{
+    img{
+      visibility: hidden;
+    }
+ }
+}
+
+@media (max-width: 360px) {
+  .header {
+    width: 100%;
+    background-size: 215% 75%;
+  }
+
+  .title{
+    h2{
+      margin-top: 28px;
+    }
+  }
+}

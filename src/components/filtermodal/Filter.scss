@@ -1,0 +1,28 @@
+.card-filter {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.renderFilterType{
+    height: 250px;
+    overflow: auto;
+    width: 410px;
+}
+
+.modalBody{
+    border-top: 1px solid rgb(241, 233, 233);
+}
+
+.filters{
+
+    border-right: 1px solid rgb(241, 233, 233);
+    p{
+        background: #f0f8ff;
+        justify-content: center;
+        align-items: center;
+        width: 177px;
+        height: 52px;
+        display: flex;
+    }
+}

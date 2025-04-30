@@ -1,0 +1,111 @@
+.home-page {
+    margin: auto;
+    width: 90%;
+    max-width: 1200px;
+    padding: 1rem;
+  }
+  
+  .restaurant-grid-card {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+  }
+  
+  .restaurant-grid-filter {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 1.3rem;
+    gap: 7px;
+  
+    Button {
+      height: 25px;
+      font-size: smaller;
+      z-index: 1;
+    }
+  
+    .filter-btn {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 6px;
+    }
+  }
+  
+  @media (max-width: 1024px) {
+    .home-page {
+      width: 95%;
+      padding: 0.5rem;
+    }
+  }
+  
+  @media (max-width: 768px) {
+  }
+  
+  @media (max-width: 480px) {
+    .home-page {
+      width: calc(100% + 50px);
+      padding: 18px;
+    }
+  
+    .grid-card {
+      width: 100%;
+  
+      .card-img {
+        img {
+          width: 100%;
+          height: 339px;
+        }
+      }
+  
+      h2 {
+        font-size: 18px;
+      }
+    }
+  }
+  
+  @media (max-width: 360px) {
+    .home-page {
+      width: 100%;
+    }
+  
+    .grid-card {
+      h2 {
+        font-size: 20px;
+      }
+    }
+  
+    .grid-card-heading {
+      h2 {
+        font-size: 14px;
+      }
+    }
+  
+    .grid-card .cuisines {
+      font-size: 11px;
+    }
+  
+    .menu-header {
+      gap: 232px;
+    }
+  
+    .rating p{
+      font-size: 12px;
+    }
+  
+    .restaurant-grid-filter {
+      display: ruby-text;
+      display: flex;
+      flex-direction: column;
+    }
+  
+    .restaurant-grid-card {
+      grid-template-columns: repeat(auto-fit, minmax(154px, 1fr));
+    }
+  
+    .grid-card .card-img img {
+      height: 163px;
+    }
+  }
+  

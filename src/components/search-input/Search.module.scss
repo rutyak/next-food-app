@@ -1,0 +1,160 @@
+.search {
+  justify-content: center;
+  width: 90%;
+  display: flex;
+  position: absolute;
+  top: 10rem;
+  max-width: 1200px;
+  margin: auto;
+
+  Input {
+    background: #fff;
+    border-radius: 0 5px 0 0; 
+    width: 450px;
+    height: 41px;
+    padding-left: 40px;
+    box-shadow: 0 20px 30px -10px #26394d;
+  }
+
+  Button {
+    background-color: rgb(255, 255, 255);
+    border-radius: 5px 0 0 5px;
+    align-items: center;
+    gap: 9px;
+    justify-content: center;
+    height: 41px;
+    display: flex;
+    box-shadow: 0 20px 30px -10px #26394d;
+    font-size: 15px;
+
+    &:hover {
+      background-color: #163c48;
+      color: white;
+    }
+  }
+}
+
+.accordian-panal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+  margin-top: 3px;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: rgb(237, 233, 233);
+    color: red;
+  }
+}
+
+.search-icon {
+  z-index: 26;
+  position: absolute;
+  top: 11px;
+  left: 11px;
+  width: 27px;
+  height: 27px;
+  padding-bottom: 5px;
+  object-fit: contain;
+}
+
+// @media (max-width: 480px) {
+//   .search {
+//     width: calc(100% + 34px);
+//   }
+//   .search Input {
+//     width: 251px;
+//     height: 36px;
+//   }
+//   .location-detector {
+//     button {
+//       font-size: 14px;
+//       height: 36px;
+//       cursor: pointer;
+//     }
+//   }
+//   .search-icon {
+//     top: 7;
+//   }
+// }
+
+@media (max-width: 439px) {
+  .search {
+    display: flex;
+    flex-direction: column-reverse;
+    top: 8.5rem;
+
+    Input {
+      box-shadow: none;
+      border-radius: 8px;
+      width: 355px;
+      height: 36px;
+    }
+  }
+
+  .searchList{
+    width: 355px !important;
+  }
+
+  .accordian-panal-detect {
+    img {
+      width: 22px;
+      height: 20px;
+    }
+
+    p {
+      font-size: 13px;
+    }
+  }
+
+  .location-detector {
+    button {
+      cursor: pointer;
+      height: 35px;
+      font-size: 14px;
+      border-radius: 8px;
+      background: black;
+      color: azure;
+    }
+  }
+}
+
+@media (max-width: 360px) {
+  .search {
+    display: flex;
+    flex-direction: column-reverse;
+    top: 8.5rem;
+
+    Input {
+      border-radius: 8px;
+      width: 325px;
+      height: 36px;
+      box-shadow: none;
+    }
+  }
+
+  .accordian-panal-detect {
+    img {
+      width: 22px;
+      height: 20px;
+    }
+
+    p {
+      font-size: 13px;
+    }
+  }
+
+  .location-detector {
+    button {
+      cursor: pointer;
+      height: 35px;
+      font-size: 14px;
+      border-radius: 8px;
+      background: black;
+      color: azure;
+    }
+  }
+}
