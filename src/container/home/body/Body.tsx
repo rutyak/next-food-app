@@ -4,7 +4,7 @@ import React, { useEffect, useState, useContext, useRef } from "react";
 import Card from "../../../components/card/Card";
 import Carousel from "../../../components/carousel/Carousel";
 import Shimmer from "../../../components/shimmer-effect/Shimmer";
-import Search from "../../../components/search-input/Search";
+import Search from "@/container/search/Search";
 import { Heading, Box } from "@chakra-ui/react";
 import "./Body.scss";
 import Filter from "@/components/filtermodal/FIlter";
@@ -45,7 +45,7 @@ const Body = () => {
 
   useEffect(() => {
     getData();
-  }, [location]);
+  }, []);
 
   const handleInfiniteScroll = async () => {
     const scrollPosition =
@@ -121,12 +121,12 @@ const Body = () => {
     <Shimmer />
   ) : (
     <Box className="home-page">
-      {/* <Search
+      <Search
         setFilteredCard={setFilteredCard}
         setSearch={setSearch}
         search={search}
         allCard={allCard}
-      /> */}
+      />
       {window.innerWidth > 885 &&
       data?.cards[0]?.card?.card?.gridElements?.infoWithStyle?.info?.length >
         0 ? (
@@ -163,10 +163,13 @@ const Body = () => {
         <Box className="restaurant-grid-card">
           {filteredCard?.length > 0 &&
             filteredCard?.map((data: any, index: any) => {
-              const uniqueKey =
-                data?.info?.id + uniqueId || `fallback-${index}`;
-
-              return <Card key={uniqueKey} {...data?.info} grid="grid" />;
+              return (
+                <Card
+                  key={data?.info?.name + " " + index}
+                  {...data?.info}
+                  grid="grid"
+                />
+              );
             })}
           {isLoading && <Shimmer newLoad="newLoad" />}
         </Box>

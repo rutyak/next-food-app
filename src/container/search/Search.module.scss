@@ -1,6 +1,7 @@
 .search {
   justify-content: center;
-  width: 90%;
+  align-items: center;
+  width: 100%;
   display: flex;
   position: absolute;
   top: 10rem;
@@ -8,28 +9,44 @@
   margin: auto;
 
   Input {
+    border: none;
     background: #fff;
-    border-radius: 0 5px 0 0; 
+    border-radius: 0 20px 20px 0;
     width: 450px;
     height: 41px;
-    padding-left: 40px;
-    box-shadow: 0 20px 30px -10px #26394d;
+    padding-left: 43px;
+
+    &:focus{
+      border-color: green;
+    }
+  }
+
+  Input::placeholder{
+    font-size: 14px;
   }
 
   Button {
-    background-color: rgb(255, 255, 255);
-    border-radius: 5px 0 0 5px;
+    background-color: #ffffff;
+    border-radius: 20px 0 0 20px;
     align-items: center;
     gap: 9px;
     justify-content: center;
     height: 41px;
     display: flex;
-    box-shadow: 0 20px 30px -10px #26394d;
+    box-shadow: 0 6px 20px rgba(38, 57, 77, 0.3);
     font-size: 15px;
+    font-weight: 600;
+    color: #4a5568;
+    transition: all 0.3s ease;
+    padding: 0 16px;
+    cursor: pointer;
+    border: none;
 
     &:hover {
       background-color: #163c48;
       color: white;
+      transform: translateY(-1px);
+      box-shadow: 0 8px 24px rgba(22, 60, 72, 0.4);
     }
   }
 }
@@ -95,7 +112,7 @@
     }
   }
 
-  .searchList{
+  .searchList {
     width: 355px !important;
   }
 

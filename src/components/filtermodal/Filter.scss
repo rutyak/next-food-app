@@ -1,28 +1,37 @@
-.card-filter {
+.restaurant-grid-filter {
     display: flex;
-    flex-direction: column;
-    gap: 4px;
-}
-
-.renderFilterType{
-    height: 250px;
-    overflow: auto;
-    width: 410px;
-}
-
-.modalBody{
-    border-top: 1px solid rgb(241, 233, 233);
-}
-
-.filters{
-
-    border-right: 1px solid rgb(241, 233, 233);
-    p{
-        background: #f0f8ff;
-        justify-content: center;
-        align-items: center;
-        width: 177px;
-        height: 52px;
-        display: flex;
-    }
-}
+    gap: 1rem;
+    padding: 15px 0px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    max-width: 100%;
+    margin-bottom: 1.5rem;
+  }
+  
+  .restaurant-grid-filter > div {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+  }
+  
+  .restaurant-grid-filter button {
+    font-size: 13px;
+    font-weight: 500;
+    padding: 4px 16px;
+    border-radius: 25px;
+    transition: all 0.3s ease;
+    border: 1px solid #319795; 
+    color: #319795;
+  }
+  
+  .restaurant-grid-filter button:hover {
+    background-color: #e6fffa; 
+    transform: translateY(-1px);
+  }
+  
+  .restaurant-grid-filter button.active {
+    background-color: #319795;
+    color: white;
+  }
+  

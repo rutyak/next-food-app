@@ -2,7 +2,7 @@ import { useRef } from "react";
 import Card from "../card/Card";
 import "./Carousel.scss";
 import { Box, Button, Heading } from "@chakra-ui/react";
-import { MdChevronLeft, MdChevronRight } from "react-icons/md"; // Import the icons
+import { MdChevronLeft, MdChevronRight } from "react-icons/md";
 
 const Carousel = ({ suggestions, title }: any) => {
   const scrollRef = useRef<any>(null);
@@ -11,33 +11,25 @@ const Carousel = ({ suggestions, title }: any) => {
     if (scrollRef.current) {
       const amount = 900;
       scrollRef.current?.scrollBy({
-        left: direction === "left" ? -amount : amount, // Corrected scroll direction
+        left: direction === "left" ? -amount : amount,
         behavior: "smooth",
       });
     }
   };
 
   return (
-    <div className="carousel-container">
+    <>
       <Box className="carousel-heading">
         <Heading as="h2" fontSize="24px">
           {title}
         </Heading>
         <Box display="flex" gap="34px" zIndex="10 !important">
-          <Button
-            onClick={() => handleScroll("left")} 
-            borderRadius="20px"
-            data-testid="left-btn"
-          >
-            <MdChevronLeft size="24px" /> 
-          </Button>
-          <Button
-            onClick={() => handleScroll("right")}
-            borderRadius="20px"
-            data-testid="right-btn"
-          >
+          <div onClick={() => handleScroll("left")} className="scroll-left">
+            <MdChevronLeft size="24px" />
+          </div>
+          <div onClick={() => handleScroll("right")} className="scroll-right">
             <MdChevronRight size="24px" />
-          </Button>
+          </div>
         </Box>
       </Box>
       <Box className="carousel-card" ref={scrollRef} data-testid="carousel">
@@ -45,7 +37,7 @@ const Carousel = ({ suggestions, title }: any) => {
           <Card key={data?.info?.id || index} {...data?.info} {...data} />
         ))}
       </Box>
-    </div>
+    </>
   );
 };
 
