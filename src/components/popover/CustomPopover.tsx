@@ -1,37 +1,45 @@
-import { Button, Input, Popover, Portal, Text } from "@chakra-ui/react";
+import {
+  Button,
+  Input,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  PopoverArrow,
+  PopoverBody,
+  PopoverHeader,
+  Portal,
+  Text,
+} from "@chakra-ui/react";
 import { FaLocationDot } from "react-icons/fa6";
 import "./CustomPopover.scss";
+import React from "react";
 
 const CustomPopover = ({ text }: any) => {
   return (
-    <Popover.Root>
-      <Popover.Trigger asChild>
+    <Popover>
+      <PopoverTrigger>
         <Button
           size="sm"
           variant="outline"
           colorScheme="teal"
           className="popover-btn"
         >
-          <FaLocationDot size={19} color="red"/>
+          <FaLocationDot size={19} color="red" />
           {text}
         </Button>
-      </Popover.Trigger>
-      <Portal>
-        <Popover.Positioner>
-          <Popover.Content>
-            <Popover.Arrow />
-            <Popover.Body>
-              <Popover.Title fontWeight="medium">Naruto Form</Popover.Title>
-              <Text my="4">
-                Naruto is a Japanese manga series written and illustrated by
-                Masashi Kishimoto.
-              </Text>
-              <Input placeholder="Your fav. character" size="sm" />
-            </Popover.Body>
-          </Popover.Content>
-        </Popover.Positioner>
-      </Portal>
-    </Popover.Root>
+      </PopoverTrigger>
+      <PopoverContent>
+        <PopoverArrow />
+        <PopoverBody>
+          <PopoverHeader fontWeight="medium">Naruto Form</PopoverHeader>
+          <Text>
+            Naruto is a Japanese manga series written and illustrated by Masashi
+            Kishimoto.
+          </Text>
+          <Input placeholder="Your fav. character" size="sm" />
+        </PopoverBody>
+      </PopoverContent>
+    </Popover>
   );
 };
 

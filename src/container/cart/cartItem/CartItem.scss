@@ -1,0 +1,13 @@
+@media (max-width: 360px) {
+  .cart-item {
+    display: flow !important;
+
+    .cart-item-name {
+      margin-left: 0px;
+    }
+
+    .cart-item-name heading{
+      font-size: 15px;
+    }
+  }
+}

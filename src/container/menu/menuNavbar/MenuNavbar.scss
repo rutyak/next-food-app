@@ -1,0 +1,82 @@
+.menu {
+  width: 100%;
+}
+
+.search {
+  top: 0;
+  position: static;
+  width: 50%;
+
+  Input {
+    width: 83%;
+  }
+
+  Button {
+    width: 17%;
+  }
+}
+
+.menu-header {
+  background-color: #ffffff;
+  justify-content: center;
+  gap: 850px;
+  width: 100%;
+  display: flex;
+  margin-bottom: 2rem;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 20px 25px -5px,
+    rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;
+}
+
+.menu-title {
+  width: 14%;
+
+  > h2 {
+    font-family: "Ubuntu", sans-serif;
+    font-weight: 700;
+    font-style: italic;
+    color: #096f91;
+  }
+}
+
+@media (max-width: 360px) {
+  .menu-header{
+    width: 100%;
+    gap: 5px !important;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 16px;
+  }
+}
+
+@media (max-width: 1280px) {
+  .menu-header{
+    gap: 650px;
+  }
+
+
+}
+
+@media (max-width: 884px) {
+  .menu-header{
+    gap: 250px;
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+}
+
+@media (max-width: 768px) {
+  .menu-header{
+    gap: 250px;
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+}
+
+
+
+// @media (max-width: px) {
+//   .menu-header{
+//     gap: 700px;
+//   }
+// }

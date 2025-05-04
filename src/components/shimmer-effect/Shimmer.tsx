@@ -1,3 +1,4 @@
+import { Box } from "@chakra-ui/react";
 import * as shimmerStyle from "./Shimmer.module.scss";
 
 const Shimmer = ({newLoad, menuShimmerStyle}: any) => {
@@ -8,7 +9,7 @@ const Shimmer = ({newLoad, menuShimmerStyle}: any) => {
   return (
     <>
       { !newLoad && <div className={styles["top-container"]}></div>}
-      <div className={styles["shimmer-container"]}>
+      <Box className={styles["shimmer-container"]} display={newLoad? "contents": " "} data-testid="shimmer-container">
         {arr.map((value, index) => {
           return (
             <div className={styles["shimmer"]} key={index}>
@@ -21,7 +22,7 @@ const Shimmer = ({newLoad, menuShimmerStyle}: any) => {
             </div>
           );
         })}
-      </div>
+      </Box>
     </>
   );
 };

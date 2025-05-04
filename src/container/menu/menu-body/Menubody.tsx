@@ -1,0 +1,149 @@
+"use client";
+
+import {
+  Heading,
+  Text,
+  Box,
+  Image,
+  Divider, // Import Divider for the horizontal line
+} from "@chakra-ui/react";
+import { useState, useEffect, useContext } from "react";
+import MenuOptions from "../menu-options/MenuOptions";
+import starIcon from "@/assets/star.png";
+import Footer from "@/container/footer/Footer";
+import * as menuFooter from "./MenuFooter.module.scss";
+import Shimmer from "@/components/shimmer-effect/Shimmer";
+import * as menuShimmerStyle from "@/components/shimmer-effect/MenuShimmer.module.scss";
+import VariableContext from "@/context/VariableContext";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
+import React from "react";
+import { v4 } from "uuid";
+
+const Menu_url = process.env.NEXT_PUBLIC_MENU_API_URL;
+
+interface MenuQuery {
+  id?: string;
+}
+
+const Menubody = () => {
+  const query = useParams<any>();
+  const [menu, setMenu] = useState<any>([]);
+  const [menuOpt, setMenuOpt] = useState<any>([]);
+  const { location } = useContext(VariableContext);
+  const uniqueId = v4();
+
+  useEffect(() => {
+    if (query?.id && location?.lat && location?.long) {
+      getMenumenu(query?.id, location.lat, location.long);
+    }
+  }, [query.id, location]);
+
+  console.log("query-lat-long: ", query, location);
+
+  async function getMenumenu(restaurantId: string, lat: number, long: number) {
+    try {
+      const res = await fetch(
+        `${Menu_url}?lat=${lat}&lng=${long}&id=${restaurantId}`
+      );
+      const data = await res?.json();
+      console.log("menu cards: ", data);
+      setMenu(data?.data?.cards);
+      const menuFetched =
+        window.innerWidth > 884
+          ? data?.data?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards
+          : data?.data?.cards[5]?.groupedCard?.cardGroupMap?.REGULAR?.cards;
+      setMenuOpt(menuFetched);
+      console.log(
+        "menu card",
+        data?.data?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards
+      );
+    } catch (error) {
+      console.error("error: ", error);
+    }
+  }
+
+  return menuOpt?.length === 0 ? (
+    <Shimmer menuShimmerStyle={menuShimmerStyle} />
+  ) : (
+    <>
+      <div className="card-menu">
+        <Heading as="h2" size="lg" className="title-restau">
+          {menu[0]?.card?.card?.text}
+        </Heading>
+        <Box mt="4" className="restau-desc">
+          <Box mb="23px">
+            <Heading size="md" className="title-of-card">
+              <Image src={starIcon?.src} alt="rating" />
+              {menu[2]?.card?.card?.info?.avgRating} (
+              {menu[2]?.card?.card?.info?.totalRatingsString}) |{" "}
+              {menu[2]?.card?.card?.info?.costForTwoMessage}
+            </Heading>
+            <Text py="2" className="cuisine">
+              {menu[2]?.card?.card?.info?.labels?.[2]?.message}
+            </Text>
+          </Box>
+          <Box mt="-30px" mb="-10px" ml="-5px">
+            <Box display="flex" alignItems="center" mb="10px">
+              <Box
+                width="10px"
+                height="10px"
+                borderRadius="50%"
+                bg="teal.500"
+                mr="8px"
+              />
+              <Box fontSize="14px">
+                <Text fontSize="14px" mb="1px">
+                  Outlet
+                </Text>
+                <Text fontWeight="500" fontSize="14px" color="gray.300">
+                  {menu[2]?.card?.card?.info?.areaName}
+                </Text>
+              </Box>
+            </Box>
+            <Box display="flex" alignItems="center">
+              <Box
+                width="10px"
+                height="10px"
+                borderRadius="50%"
+                bg="teal.500"
+                mr="8px"
+              />
+              <Text fontSize="14px">
+                {menu[2]?.card?.card?.info?.sla?.slaString}
+              </Text>
+            </Box>
+          </Box>
+          <Divider my="4" borderColor="gray.200" />{" "}
+          <Box>
+            <Text className="dist-fees">
+              {" "}
+              {menu[2]?.card?.card?.info?.expectationNotifiers?.[0]?.enrichedText?.replace(
+                /<[^>]*>/g,
+                ""
+              )}
+            </Text>
+          </Box>
+        </Box>
+        <Box className="list-items">
+          <>
+            {console.log("menuoptions: ", menuOpt)}
+            {menuOpt?.map((item: any, index: number) => {
+              if (index > 0) {
+                console.log("card kya: ", item?.card?.card);
+                return (
+                  <MenuOptions
+                    key={item?.card?.card?.categoryId || index}
+                    options={item?.card?.card}
+                  />
+                );
+              }
+            })}
+          </>
+        </Box>
+      </div>
+      <Footer menuFooter={menuFooter} />
+    </>
+  );
+};
+
+export default Menubody;

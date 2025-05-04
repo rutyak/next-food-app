@@ -1,13 +1,25 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+// interface CartItem{
+//   id: string | number;
+//   quantity: number;
+//   [key: string]: any;
+// }
+
+interface CartState{
+  cartItems: any[];
+}
+
+const initialState: CartState = {
+  cartItems: [],
+}
+
 const cartSlice = createSlice({
   name: "cart",
-  initialState: {
-    cartItems: [],
-  },
+  initialState,
   reducers: {
-    addCart: (state: any, action: any) => {
-      const index = state.cartItems.findIndex(
+    addCart: ({state, action}: any) => {
+      const index = state.cartItems?.findIndex(
         (item: any) => item.id === action.payload.id
       );
 
@@ -18,12 +30,12 @@ const cartSlice = createSlice({
         state.cartItems.push({ ...action.payload, quantity: 1 });
       }
     },
-    removeCart: (state: any, action: any) => {
+    removeCart: (state, action) => {
       state.cartItems = state.cartItems.filter(
         (item: any) => item.id !== action.payload
       );
     },
-    increaseQuantity: (state: any, action: any) => {
+    increaseQuantity: ({state, action}: any) => {
       const itemIndex = state.cartItems.findIndex(
         (item: any) => item.id === action.payload
       );
@@ -32,7 +44,7 @@ const cartSlice = createSlice({
         state.cartItems[itemIndex].quantity += 1;
       }
     },
-    decreaseQuantity: (state: any, action: any) => {
+    decreaseQuantity: ({state, action}: any) => {
       const itemIndex = state.cartItems.findIndex(
         (item: any) => item.id === action.payload
       );
@@ -45,7 +57,7 @@ const cartSlice = createSlice({
         }
       }
     },
-    clearAllCart: (state: any, action: any) => {
+    clearAllCart: (state, action) => {
       state.cartItems = [];
     },
   },

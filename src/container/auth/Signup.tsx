@@ -1,90 +1,100 @@
-import React, { useState } from "react";
+import React from "react";
 import {
-  Box,
+  FormControl,
+  FormLabel,
+  Input,
+  WrapItem,
   Button,
-  TextField,
-  Typography,
-  Snackbar,
-  Alert,
-} from "@mui/material";
+  TabPanel,
+} from "@chakra-ui/react";
+import "./Style.scss";
+import { useToast } from "@chakra-ui/react";
+import { useState } from "react";
 
-interface SignUpProps {
-  onClose: () => void;
-}
+const SignUp = ({ onClose }: any) => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPass, setConfirmPass] = useState("");
+  const toast = useToast();
 
-const SignUp: React.FC<SignUpProps> = ({ onClose }) => {
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
-  const [confirmPass, setConfirmPass] = useState<string>("");
-  const [snackbar, setSnackbar] = useState<{ open: boolean; message: string; severity: "success" | "error" }>({
-    open: false,
-    message: "",
-    severity: "success",
-  });
-
-  const handleCloseSnackbar = () => {
-    setSnackbar({ ...snackbar, open: false });
-  };
-
-  const handleSubmit = async (): Promise<void> => {
+  const handleSubmit = async () => {
     if (password !== confirmPass) {
-      setSnackbar({
-        open: true,
-        message: "Passwords do not match",
-        severity: "error",
+      toast({
+        title: "Password not matching",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
       });
       return;
     }
-
   };
 
+  // const handleGoogleSignIn = () => {
+  //   const googleProvider = new GoogleAuthProvider();
+  //   signInWithPopup(auth, googleProvider)
+  //     .then((res) => {
+  //       toast({
+  //         title: "Account SignIn Successfully!!",
+  //         status: "success",
+  //         duration: 3000,
+  //         isClosable: true,
+  //       });
+  //     })
+  //     .catch((e) => {
+  //       toast({
+  //         title: e.message,
+  //         status: "error",
+  //         duration: 3000,
+  //         isClosable: true,
+  //       });
+  //     });
+  // };
 
   return (
-    <Box className="signup-body" sx={{ p: 2 }}>
-      <TextField
-        fullWidth
-        label="Email"
-        type="email"
-        margin="normal"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
-      <TextField
-        fullWidth
-        label="Password"
-        type="password"
-        margin="normal"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      <TextField
-        fullWidth
-        label="Confirm Password"
-        type="password"
-        margin="normal"
-        value={confirmPass}
-        onChange={(e) => setConfirmPass(e.target.value)}
-      />
-      <Button
-        variant="contained"
-        color="warning"
-        className="login-btn"
-        onClick={handleSubmit}
-      >
-        Sign Up
-      </Button>
+    <TabPanel className="signup-body">
+      <FormControl width="100%">
+        <FormLabel htmlFor="email">Email</FormLabel>
+        <Input
+          id="email"
+          type="email"
+          mb="16px"
+          onChange={(e) => setEmail(e.target.value)}
+          value={email}
+        />
 
-      <Snackbar
-        open={snackbar.open}
-        autoHideDuration={3000}
-        onClose={handleCloseSnackbar}
-        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-      >
-        <Alert onClose={handleCloseSnackbar} severity={snackbar.severity} sx={{ width: "100%" }}>
-          {snackbar.message}
-        </Alert>
-      </Snackbar>
-    </Box>
+        <FormLabel htmlFor="password">Password</FormLabel>
+        <Input
+          id="password"
+          type="password"
+          mb="16px"
+          onChange={(e) => setPassword(e.target.value)}
+          value={password}
+        />
+
+        <FormLabel htmlFor="cpassword">Confirm Password</FormLabel>
+        <Input
+          id="cpassword"
+          type="password"
+          mb="20px"
+          onChange={(e) => setConfirmPass(e.target.value)}
+          value={confirmPass}
+        />
+      </FormControl>
+      <WrapItem width="100%">
+        <Button
+          colorScheme="yellow"
+          className="login-btn"
+          onClick={() => handleSubmit()}
+        >
+          Sign Up
+        </Button>
+      </WrapItem>
+      {/* <p className="or">Or</p>
+      <Button className="google-btn" width="100%" onClick={handleGoogleSignIn}>
+        <GoogleIcon />
+        <p>Sign up with google</p>
+      </Button> */}
+    </TabPanel>
   );
 };
 

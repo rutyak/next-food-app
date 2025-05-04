@@ -1,20 +1,21 @@
 import React, { useContext } from 'react';
 import * as homeFooter from './Footer.module.scss';
+import { Text } from '@chakra-ui/react';
 
-const Footer = () => {
+const Footer = ({menuFooter}: any) => {
 
-  const styles: any =  homeFooter;
+  const styles = menuFooter || homeFooter;
 
   return (
     <footer className={styles.footer}>
       <div className={styles["container"]}>
         <div className={styles["footer-content"]}>
           <div className={styles["footer-column"]}>
-            <h2 color='#4be7e7'>About Us</h2>
+            <Text color='#4be7e7'>About Us</Text>
             <p>Indias fastest delivery app, Providing good food with rewards. free registration and enjoy enjoy meal. Buy 2 items get free delivary</p>
           </div>
           <div className={styles["footer-column"]}>
-            <h2 color='#4be7e7'>Services</h2>
+            <Text color='#4be7e7'>Services</Text>
             <ul>
               <li>Web Design</li>
               <li>Graphic Design</li>
@@ -22,7 +23,7 @@ const Footer = () => {
             </ul>
           </div>
           <div className={styles["footer-column"]}>
-            <h2 color='#4be7e7'>Contact Us</h2>
+            <Text color='#4be7e7'>Contact Us</Text>
             <p>Email: foodbazaar.official@gmail.com</p>
             <p>Phone: 123-456-7890</p>
           </div>

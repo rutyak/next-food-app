@@ -1,4 +1,4 @@
-import { Box, Icon, Input, InputGroup, Text } from "@chakra-ui/react";
+import { Box, Input, InputGroup, InputLeftElement, Text } from "@chakra-ui/react";
 import useFilter from "@/utils/useFilter";
 import SearchList from "./searchlist/SearchList";
 import * as searchStyles from "./Search.module.scss";
@@ -6,6 +6,7 @@ import { useContext, useState } from "react";
 import VariableContext from "@/context/VariableContext";
 import { GoSearch } from "react-icons/go";
 import CustomPopover from "@/components/popover/CustomPopover";
+import React from "react";
 
 const Location_url = process.env.REACT_APP_LOCATION_API_URL;
 const CORS_PROXY = "https://cors-anywhere.herokuapp.com/";
@@ -40,8 +41,6 @@ const Search = ({ setFilteredCard, setSearch, search, allCard, cart }: any) => {
         `${CORS_PROXY}${Location_url}&q=${lat},${long}`
       );
       const data = await res.json();
-      // setCity(data?.location?.name);
-      // setState(data?.location?.region);
     } catch (error) {
       console.error(error);
     }
@@ -55,25 +54,23 @@ const Search = ({ setFilteredCard, setSearch, search, allCard, cart }: any) => {
   };
 
   const handleDetectLocation = () => {
-    const obj = navigator.geolocation.getCurrentPosition(successLocation);
+    navigator.geolocation.getCurrentPosition(successLocation);
   };
 
   return (
     <div className={styles["search"]}>
-      <div style={{border: "20px 0px 0px 20px"}}>
-        <CustomPopover text="Location"/>
+      <div style={{ border: "20px 0px 0px 20px" }}>
+        <CustomPopover text="Location" />
       </div>
 
       <Box position="relative">
         {!cart && (
-          <InputGroup
-            startElement={
-              <Box style={{ paddingLeft:"14px", paddingTop:"3px" }}>
-                <GoSearch size={20} />
-              </Box>
-            }
-            pl={10}
-          >
+          <InputGroup>
+            <InputLeftElement
+              pointerEvents="none"
+              children={<GoSearch color="gray.500" />}
+              style={{ paddingLeft: "8px" }}
+            />
             <Input
               placeholder="Search your food..."
               size="md"
@@ -81,6 +78,7 @@ const Search = ({ setFilteredCard, setSearch, search, allCard, cart }: any) => {
               onKeyDown={(e: any) => handleEnter(e)}
               value={search}
               className="search"
+              pl="32px" 
             />
           </InputGroup>
         )}

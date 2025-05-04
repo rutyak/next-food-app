@@ -1,136 +1,132 @@
-import React, { useState } from "react";
 import {
   Button,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  Tabs,
+  Input,
+  Modal,
+  ModalCloseButton,
+  ModalContent,
+  FormControl,
+  FormLabel,
+  HStack,
+  Checkbox,
+  ModalOverlay,
   Tab,
-  TextField,
-  Snackbar,
-  Alert,
-  IconButton,
-  Box
-} from "@mui/material";
-import CloseIcon from "@mui/icons-material/Close";
+  TabList,
+  TabPanel,
+  TabPanels,
+  Tabs,
+  WrapItem,
+  useDisclosure,
+} from "@chakra-ui/react";
 import SignUp from "./Signup";
+import React, { useRef, useState } from "react";
 import "./Style.scss";
+import { useToast } from "@chakra-ui/react";
+import { AnyARecord } from "dns";
 
-const Login: React.FC = () => {
-  const [open, setOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState(0);
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
+const Login = () => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const finalRef = useRef(null);
+  const toast = useToast();
 
-  const [snackbar, setSnackbar] = useState({
-    open: false,
-    message: "",
-    severity: "success" as "success" | "error"
-  });
-
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => {
-    setOpen(false);
-    setEmail("");
-    setPassword("");
-  };
-
-  const handleSnackbarClose = () => {
-    setSnackbar((prev) => ({ ...prev, open: false }));
-  };
-
-  const handleTabChange = (_: React.SyntheticEvent, newValue: number) => {
-    setActiveTab(newValue);
-  };
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
 
   const handleSubmit = async () => {
-    if (!email || !password) {
-      setSnackbar({
-        open: true,
-        message: "Fill all the field's",
-        severity: "error"
+    if (!email && !password) {
+      toast({
+        title: "Fill all the field's",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
       });
       return;
     }
-  }
+  };
 
+  // const handleGoogleSignIn = () => {
+  //   const googleProvider = new GoogleAuthProvider();
+  //   signInWithPopup(auth, googleProvider)
+  //     .then((res) => {
+  //       toast({
+  //         title: "Account SignIn Successfully!!",
+  //         status: "success",
+  //         duration: 3000,
+  //         isClosable: true,
+  //       });
+  //     })
+  //     .catch((e) => {
+  //       toast({
+  //         title: e.message,
+  //         status: "error",
+  //         duration: 3000,
+  //         isClosable: true,
+  //       });
+  //     });
+  // };
 
   return (
     <>
-      <Button variant="contained" sx={{ backgroundColor: "sandybrown" }} onClick={handleOpen}>
+      <Button bg="sandybrown" onClick={onOpen}>
         Login
       </Button>
+      <Modal finalFocusRef={finalRef} isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent bg="black" color="white">
+          <Tabs isFitted variant="enclosed">
+            <TabList>
+              <Tab>Login</Tab>
+              <Tab>SignUp</Tab>
+            </TabList>
+            <TabPanels p="23px">
+              <TabPanel>
+                <FormControl>
+                  <FormLabel htmlFor="email">Email</FormLabel>
+                  <Input
+                    id="email"
+                    type="email"
+                    mb="16px"
+                    onChange={(e: any) => setEmail(e.target.value)}
+                    value={email}
+                  />
 
-      <Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm">
-        <DialogTitle sx={{ bgcolor: "black", color: "white" }}>
-          <Box display="flex" justifyContent="space-between" alignItems="center">
-            <span>{activeTab === 0 ? "Login" : "Sign Up"}</span>
-            <IconButton onClick={handleClose} sx={{ color: "white" }}>
-              <CloseIcon />
-            </IconButton>
-          </Box>
-        </DialogTitle>
+                  <FormLabel htmlFor="password">Password</FormLabel>
+                  <Input
+                    id="password"
+                    type="password"
+                    onChange={(e: any) => setPassword(e.target.value)}
+                    value={password}
+                  />
+                </FormControl>
 
-        <DialogContent sx={{ bgcolor: "black", color: "white" }}>
-          <Tabs value={activeTab} onChange={handleTabChange} centered textColor="secondary" indicatorColor="secondary">
-            <Tab label="Login" />
-            <Tab label="Sign Up" />
+                {/* <HStack justify="space-between" width="100%" mb="16px">
+                  <Checkbox defaultChecked>Remember me</Checkbox>
+                  <Button variant="text" size="sm">
+                    Forgot password?
+                  </Button>
+                </HStack> */}
+                <WrapItem>
+                  <Button
+                    colorScheme="yellow"
+                    className="login-btn"
+                    onClick={handleSubmit}
+                  >
+                    Login
+                  </Button>
+                </WrapItem>
+                {/* <p className="or">Or</p>
+                <Button className="google-btn" onClick={handleGoogleSignIn}>
+                  <GoogleIcon />
+                  <p>Sign in with google</p>
+                </Button> */}
+              </TabPanel>
+              <TabPanel>
+                <SignUp onClose={onClose} />
+              </TabPanel>
+            </TabPanels>
           </Tabs>
-
-          {activeTab === 0 && (
-            <Box mt={2}>
-              <TextField
-                label="Email"
-                type="email"
-                fullWidth
-                margin="normal"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                InputLabelProps={{ style: { color: "white" } }}
-                InputProps={{ style: { color: "white" } }}
-              />
-              <TextField
-                label="Password"
-                type="password"
-                fullWidth
-                margin="normal"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                InputLabelProps={{ style: { color: "white" } }}
-                InputProps={{ style: { color: "white" } }}
-              />
-
-              <Button
-                variant="contained"
-                color="warning"
-                fullWidth
-                sx={{ mt: 2 }}
-                onClick={handleSubmit}
-                className="login-btn"
-              >
-                Login
-              </Button>
-            </Box>
-          )}
-
-          {activeTab === 1 && (
-            <Box mt={2}>
-              <SignUp onClose={handleClose} />
-            </Box>
-          )}
-        </DialogContent>
-      </Dialog>
-
-      <Snackbar
-        open={snackbar.open}
-        autoHideDuration={3000}
-        onClose={handleSnackbarClose}
-        anchorOrigin={{ vertical: "top", horizontal: "center" }}
-      >
-        <Alert severity={snackbar.severity} onClose={handleSnackbarClose} sx={{ width: "100%" }}>
-          {snackbar.message}
-        </Alert>
-      </Snackbar>
+          <ModalCloseButton />
+        </ModalContent>
+      </Modal>
     </>
   );
 };

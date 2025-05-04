@@ -40,10 +40,10 @@ const Card = ({
         {!action && (
           <div className="info">
             <h2 className="title">{name}</h2>
-            <p className="rating">
+            <div className="rating">
               <Image src={rating?.src} width={15} height={15} alt="rating" />
               <p>{avgRating}</p>
-            </p>
+            </div>
             <p className="cuisines">{cuisines?.join(", ")}</p>
           </div>
         )}
