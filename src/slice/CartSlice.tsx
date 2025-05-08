@@ -1,52 +1,52 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-// interface CartItem{
-//   id: string | number;
+// interface CartItem {
+//   id: string | number; // Use whatever type your ID is
 //   quantity: number;
-//   [key: string]: any;
+//   // Add any other properties that your cart items have
+//   [key: string]: any; // This allows for additional properties
 // }
 
-interface CartState{
+interface CartState {
   cartItems: any[];
 }
 
 const initialState: CartState = {
   cartItems: [],
-}
+};
 
 const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
-    addCart: ({state, action}: any) => {
-      const index = state.cartItems?.findIndex(
-        (item: any) => item.id === action.payload.id
+    addCart: (state, action: PayloadAction<any>) => {
+      const index = state.cartItems.findIndex(
+        (item) => item.id === action.payload.id
       );
 
-      console.log("index:",index);
       if (index !== -1) {
         state.cartItems[index].quantity += 1;
       } else {
         state.cartItems.push({ ...action.payload, quantity: 1 });
       }
     },
-    removeCart: (state, action) => {
+    removeCart: (state, action: PayloadAction<string | number>) => {
       state.cartItems = state.cartItems.filter(
-        (item: any) => item.id !== action.payload
+        (item) => item.id !== action.payload
       );
     },
-    increaseQuantity: ({state, action}: any) => {
+    increaseQuantity: (state, action: PayloadAction<string | number>) => {
       const itemIndex = state.cartItems.findIndex(
-        (item: any) => item.id === action.payload
+        (item) => item.id === action.payload
       );
 
       if (itemIndex !== -1) {
         state.cartItems[itemIndex].quantity += 1;
       }
     },
-    decreaseQuantity: ({state, action}: any) => {
+    decreaseQuantity: (state, action: PayloadAction<string | number>) => {
       const itemIndex = state.cartItems.findIndex(
-        (item: any) => item.id === action.payload
+        (item) => item.id === action.payload
       );
 
       if (itemIndex !== -1) {
@@ -57,12 +57,18 @@ const cartSlice = createSlice({
         }
       }
     },
-    clearAllCart: (state, action) => {
+    clearAllCart: (state) => {
       state.cartItems = [];
     },
   },
 });
 
-export const { addCart, removeCart, clearAllCart, decreaseQuantity, increaseQuantity} = cartSlice.actions;
+export const {
+  addCart,
+  removeCart,
+  clearAllCart,
+  decreaseQuantity,
+  increaseQuantity,
+} = cartSlice.actions;
 
 export default cartSlice.reducer;

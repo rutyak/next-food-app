@@ -3,26 +3,52 @@
   border: 1px solid gray;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 1.5rem 1rem 1.5rem;
+  padding: 14px 0px;
   height: 263px;
   width: 100%;
-  background-image: url('../../../assets/back-5.jpg');
+  background-image: url("../../../assets/back-5.jpg");
   background-repeat: no-repeat;
-  background-attachment: fixed; 
+  background-attachment: fixed;
   background-size: 100% 77%;
+}
 
-  &-slogan{
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    margin-top: 3px;
+.top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.slogan {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  padding-left: 20px;
+
+  img {
+    width: 40px;
+  }
+
+  p {
+    font-size: 17px;
+  }
+
+  @media (max-width: 780px) {
+    img {
+      width: 40px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    img {
+      width: 30px;
+    }
   }
 }
 
-
-.title{
-  h2{
-    text-align: center;    
+.title {
+  h2 {
+    text-align: center;
     margin-top: 41px;
     font-family: "Ubuntu", sans-serif;
     font-weight: 700;
@@ -31,37 +57,16 @@
   }
 }
 
-
 @media (max-width: 780px) {
-   .header-slogan{
-      p{
-        visibility: hidden;
-      }
-   }
-}
-
-@media (max-width: 480px) {
-  .header{
-    width: calc(100% + 51px);
-    background-size: 215% 75%;
-  }
-
-  .header-slogan{
-    img{
+  .slogan {
+    p {
       visibility: hidden;
     }
- }
+  }
 }
 
-@media (max-width: 360px) {
-  .header {
-    width: 100%;
-    background-size: 215% 75%;
-  }
-
-  .title{
-    h2{
-      margin-top: 28px;
-    }
+@media (min-width: 480px) {
+  .burger {
+    visibility: hidden;
   }
 }

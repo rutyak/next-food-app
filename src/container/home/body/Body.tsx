@@ -12,13 +12,15 @@ import { debounce } from "lodash";
 import VariableContext from "@/context/VariableContext";
 import { v4 } from "uuid";
 
-const Base_url = process.env.NEXT_PUBLIC_RESTAURANTS_API_URL;
-
-const Body = () => {
-  const [search, setSearch] = useState<any>("");
+const Body = ({
+  setFilteredCard,
+  filteredCard,
+  setSearch,
+  search,
+  allCard,
+  setAllCard,
+}: any) => {
   const [data, setData] = useState<any>([]);
-  const [filteredCard, setFilteredCard] = useState<any>([]);
-  const [allCard, setAllCard] = useState<any>([]);
   const [isLoading, setIsLoading] = useState<any>(false);
   const { location } = useContext<any>(VariableContext);
   const eventRef = useRef<any>(null);
@@ -61,14 +63,14 @@ const Body = () => {
       setIsLoading(true);
       try {
         const res = await fetch(
-          `${Base_url}?lat=${location.lat}&lng=${location.long}`
+          `/api/restaurant?lat=${location.lat}&lng=${location.long}`
         );
 
         console.log(res);
         const data = await res.json();
 
         const newCards =
-          data?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle
+          data?.data?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle
             ?.restaurants;
 
         setAllCard((prevCard: any) => [
@@ -98,14 +100,15 @@ const Body = () => {
   async function getData() {
     try {
       const res = await fetch(
-        `${Base_url}?lat=${location.lat}&lng=${location.long}`
+        `api/restaurant?lat=${location.lat}&lng=${location.long}`
       );
       const data = await res.json();
 
-      setData(data?.data);
+      setData(data?.data?.data);
+      console.log("data in body %%%%%%%%%: ", data?.data?.data);
 
       const restaurants =
-        data?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle
+        data?.data?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle
           ?.restaurants;
 
       setAllCard(restaurants);
@@ -121,12 +124,6 @@ const Body = () => {
     <Shimmer />
   ) : (
     <Box className="home-page">
-      <Search
-        setFilteredCard={setFilteredCard}
-        setSearch={setSearch}
-        search={search}
-        allCard={allCard}
-      />
       {window.innerWidth > 885 &&
       data?.cards[0]?.card?.card?.gridElements?.infoWithStyle?.info?.length >
         0 ? (

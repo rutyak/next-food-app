@@ -24,7 +24,7 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
-import rupee from "../../assets/rupee.png";
+import rupee from "@/assets/rupee.png";
 import CartItem from "./cartItem/CartItem";
 import "./Cart.scss";
 import MenuNavbar from "../menu/menuNavbar/MenuNavbar";
@@ -44,15 +44,13 @@ const Cart = () => {
 
   const cartItems = useSelector((state: any) => state.cart.cartItems);
   
-  console.log("cartItems: ", cartItems);
-  
   const deliveryCharge = 40; 
   const estimatedTime = 30; 
 
   const calculateSubtotal = () => {
     const subtotal = cartItems.reduce(({acc, item}: any) => {
-      const price = item.price ? item.price / 100 : item.defaultPrice / 100;
-      return acc + price * item.quantity.toFixed(2);
+      const price = item?.price ? item?.price / 100 : item?.defaultPrice / 100;
+      return acc + price * item?.quantity?.toFixed(2);
     }, 0);
 
     return subtotal;
@@ -68,7 +66,7 @@ const Cart = () => {
 
   const handleInputChange = (e: any) => {
     const { name, value } = e.target;
-    setBillingDetails((prevDetails: any) => ({
+    setBillingDetails((prevDetails) => ({
       ...prevDetails,
       [name]: value,
     }));
@@ -104,7 +102,7 @@ const Cart = () => {
           Your Cart
         </Heading>
         <Stack spacing={4}>
-          {cartItems?.map((item: any) => (
+          {cartItems.map((item: any) => (
             <CartItem key={item.id} item={item} cartItems={cartItems}/>
           ))}
         </Stack>

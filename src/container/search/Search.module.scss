@@ -5,14 +5,13 @@
   display: flex;
   position: absolute;
   top: 10rem;
-  max-width: 1200px;
   margin: auto;
 
   Input {
     border: none;
     background: #fff;
     border-radius: 0 20px 20px 0;
-    width: 450px;
+    width: 500px;
     height: 41px;
     padding-left: 43px;
 
@@ -48,6 +47,12 @@
       transform: translateY(-1px);
       box-shadow: 0 8px 24px rgba(22, 60, 72, 0.4);
     }
+  }
+
+  @media (max-width: 780px) {
+     Input{
+      width: 300px;
+     }
   }
 }
 

@@ -1,5 +1,3 @@
-"use client";
-
 import { image_url } from "@/config/Config";
 import { Image, Flex, Box, Text, Heading, Button } from "@chakra-ui/react";
 import rupee from "@/assets/rupee.png";

@@ -1,5 +1,3 @@
-"use client";
-
 import { Box, Text, Heading, Image, Button, useToast } from "@chakra-ui/react";
 import "./MenuCard.scss";
 import starIcon from "@/assets/star-icon.png";
@@ -11,29 +9,27 @@ import { useRef, useState } from "react";
 const MenuCard = ({
   id,
   name,
-  description,
+  description= "add any thing",
   ratings,
   isBestseller,
   price,
   defaultPrice,
   imageId,
 }: any) => {
-  const [quantity, setQuantity] = useState<number>(1);
-  const [isAdded, setIsAdded] = useState<boolean>(false);
-  const [isExpanded, setIsExpanded] = useState<boolean>(false);
+  const [quantity, setQuantity] = useState(1);
+  const [isAdded, setIsAdded] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
   const dispatch = useDispatch();
-  
+
   const toast = useToast();
 
-  const cartData = useSelector((store: any) => store.cart?.cartItems);
+  console.log("description @@@@@@@@@@@@ : ", description);
 
-  console.log("cartData in menu card: ", cartData);
+
+  const cartData = useSelector((store: any) => store.cart.cartItems);
 
   const handleAddToCart = (id: any) => {
-    
-    console.log("add to cart: ");
-    console.log("add to card iiiiid: ", id);
-
+    // console.log("user: ", user);
 
     // if (!user) {
     //   toast({
@@ -45,9 +41,9 @@ const MenuCard = ({
     // } else {
       let itemQuantity = cartData?.find((item: any) => item.id === id);
 
-      let currentQuantity = itemQuantity?.quantity ?? 0; 
+      let currentQuantity = itemQuantity?.quantity ?? 0;
 
-      const itemDetails: any = {
+      const itemDetails = {
         id,
         name,
         ratings,
@@ -56,12 +52,10 @@ const MenuCard = ({
         imageId,
         quantity: currentQuantity + 1,
       };
-      console.log("itemDetails ##########: ", itemDetails);
-      
+      console.log(currentQuantity);
       dispatch(addCart(itemDetails));
 
       setQuantity((prev) => prev + 1);
-    // }
   };
 
   return (
@@ -89,7 +83,7 @@ const MenuCard = ({
           <Box className="item-rating" mb={2} w="63px">
             {Object.keys(ratings?.aggregatedRating).length !== 0 ? (
               <>
-                <Image src={starIcon?.src} alt="rating" />
+                <img src={starIcon?.src} alt="rating" />
                 <Text fontSize="sm">
                   {ratings?.aggregatedRating?.rating} (
                   {ratings?.aggregatedRating?.ratingCountV2})

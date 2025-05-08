@@ -1,4 +1,10 @@
-import { Box, Input, InputGroup, InputLeftElement, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Input,
+  InputGroup,
+  InputLeftElement,
+  Text,
+} from "@chakra-ui/react";
 import useFilter from "@/utils/useFilter";
 import SearchList from "./searchlist/SearchList";
 import * as searchStyles from "./Search.module.scss";
@@ -37,9 +43,7 @@ const Search = ({ setFilteredCard, setSearch, search, allCard, cart }: any) => {
 
   async function getLocation(lat: any, long: any) {
     try {
-      const res = await fetch(
-        `${CORS_PROXY}${Location_url}&q=${lat},${long}`
-      );
+      const res = await fetch(`${CORS_PROXY}${Location_url}&q=${lat},${long}`);
       const data = await res.json();
     } catch (error) {
       console.error(error);
@@ -59,33 +63,33 @@ const Search = ({ setFilteredCard, setSearch, search, allCard, cart }: any) => {
 
   return (
     <div className={styles["search"]}>
-      <div style={{ border: "20px 0px 0px 20px" }}>
-        <CustomPopover text="Location" />
+        <div style={{ border: "20px 0px 0px 20px" }}>
+          <CustomPopover text="Location" />
+        </div>
+
+        <Box position="relative">
+          {!cart && (
+            <InputGroup>
+              <InputLeftElement
+                pointerEvents="none"
+                children={<GoSearch color="gray.500" />}
+                style={{ paddingLeft: "8px" }}
+              />
+              <Input
+                placeholder="Search your food..."
+                size="md"
+                onChange={(e: any) => handleSearch(e)}
+                onKeyDown={(e: any) => handleEnter(e)}
+                value={search}
+                className="search"
+                pl="32px"
+              />
+            </InputGroup>
+          )}
+
+          {search && search !== " " && <SearchList resultList={resultList} />}
+        </Box>
       </div>
-
-      <Box position="relative">
-        {!cart && (
-          <InputGroup>
-            <InputLeftElement
-              pointerEvents="none"
-              children={<GoSearch color="gray.500" />}
-              style={{ paddingLeft: "8px" }}
-            />
-            <Input
-              placeholder="Search your food..."
-              size="md"
-              onChange={(e: any) => handleSearch(e)}
-              onKeyDown={(e: any) => handleEnter(e)}
-              value={search}
-              className="search"
-              pl="32px" 
-            />
-          </InputGroup>
-        )}
-
-        {search && search !== " " && <SearchList resultList={resultList} />}
-      </Box>
-    </div>
   );
 };
 

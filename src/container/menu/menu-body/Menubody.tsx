@@ -1,12 +1,6 @@
 "use client";
 
-import {
-  Heading,
-  Text,
-  Box,
-  Image,
-  Divider, // Import Divider for the horizontal line
-} from "@chakra-ui/react";
+import { Heading, Text, Box, Image, Divider } from "@chakra-ui/react";
 import { useState, useEffect, useContext } from "react";
 import MenuOptions from "../menu-options/MenuOptions";
 import starIcon from "@/assets/star.png";
@@ -20,6 +14,8 @@ import React from "react";
 import { v4 } from "uuid";
 
 const Menu_url = process.env.NEXT_PUBLIC_MENU_API_URL;
+
+console.log("Menu_url: ", Menu_url);
 
 interface MenuQuery {
   id?: string;
@@ -38,24 +34,26 @@ const Menubody = () => {
     }
   }, [query.id, location]);
 
-  console.log("query-lat-long: ", query, location);
+  console.log("menu menu dta #############: ", menu);
 
   async function getMenumenu(restaurantId: string, lat: number, long: number) {
     try {
+      console.log("restaurantId, lat, long", restaurantId, lat, long);
+
       const res = await fetch(
-        `${Menu_url}?lat=${lat}&lng=${long}&id=${restaurantId}`
+        `/api/menu/${restaurantId}?lat=${lat}&lng=${long}`
       );
       const data = await res?.json();
       console.log("menu cards: ", data);
-      setMenu(data?.data?.cards);
+      setMenu(data?.data?.data?.cards);
       const menuFetched =
         window.innerWidth > 884
-          ? data?.data?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards
-          : data?.data?.cards[5]?.groupedCard?.cardGroupMap?.REGULAR?.cards;
+          ? data?.data?.data?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards
+          : data?.data?.data?.cards[5]?.groupedCard?.cardGroupMap?.REGULAR?.cards;
       setMenuOpt(menuFetched);
       console.log(
         "menu card",
-        data?.data?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards
+        data?.data?.data?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards
       );
     } catch (error) {
       console.error("error: ", error);
@@ -68,7 +66,7 @@ const Menubody = () => {
     <>
       <div className="card-menu">
         <Heading as="h2" size="lg" className="title-restau">
-          {menu[0]?.card?.card?.text}
+          {/* {menu[0]?.card?.card?.text} */}
         </Heading>
         <Box mt="4" className="restau-desc">
           <Box mb="23px">

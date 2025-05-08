@@ -11,9 +11,6 @@ import "./MenuOptions.scss";
 import CustomAccordion from "@/components/accordian/CustomAccordion";
 
 const MenuOptions = ({ options }: any) => {
-
-  console.log("options: ", options);
-
   return (
     <>
       {!options?.carousel && (
@@ -25,17 +22,17 @@ const MenuOptions = ({ options }: any) => {
                 borderRadius="10px"
               >
                 <Box as="span" flex="1" textAlign="left">
-                  {options.title} {options?.itemCards?.length > 0? `(${options?.itemCards?.length})` : ""}
+                  {options.title}{" "}
+                  {options?.itemCards?.length > 0
+                    ? `(${options?.itemCards?.length})`
+                    : ""}
                 </Box>
                 <AccordionIcon />
               </AccordionButton>
             </h2>
             <AccordionPanel>
               {options?.itemCards?.length > 0 &&
-                options?.itemCards?.map(({card, index}: any) => {
-
-                  console.log("carrrd menu wala: ", card);
-
+                options?.itemCards?.map(({ card, index }: any) => {
                   return (
                     <MenuCard
                       key={`${card?.info?.id || "menu-card"}-${index}`}
@@ -43,11 +40,9 @@ const MenuOptions = ({ options }: any) => {
                     />
                   );
                 })}
-              {options?.categories?.length > 0 &&
-                options?.categories?.map(({cat, index}: any) => {
 
-                  console.log("cat $$$$: ", cat);
-
+              {options.categories?.length > 0 &&
+                options?.categories?.map((cat: any, index: number) => {
                   return (
                     <CustomAccordion
                       key={`${cat?.id || "custom-accordion"}-${index}`}
