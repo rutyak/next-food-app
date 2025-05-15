@@ -29,19 +29,19 @@ const Menubody = () => {
   const uniqueId = v4();
 
   useEffect(() => {
-    if (query?.id && location?.lat && location?.long) {
-      getMenumenu(query?.id, location.lat, location.long);
+    if (query?.id && location?.lat && location?.lng) {
+      getMenumenu(query?.id, location.lat, location.lng);
     }
   }, [query.id, location]);
 
   console.log("menu menu dta #############: ", menu);
 
-  async function getMenumenu(restaurantId: string, lat: number, long: number) {
+  async function getMenumenu(restaurantId: string, lat: number, lng: number) {
     try {
-      console.log("restaurantId, lat, long", restaurantId, lat, long);
+      console.log("restaurantId, lat, lng", restaurantId, lat, lng);
 
       const res = await fetch(
-        `/api/menu/${restaurantId}?lat=${lat}&lng=${long}`
+        `/api/menu/${restaurantId}?lat=${lat}&lng=${lng}`
       );
       const data = await res?.json();
       console.log("menu cards: ", data);

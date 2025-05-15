@@ -10,7 +10,11 @@ export default withAuth(
       return NextResponse.redirect(`${origin}/auth/login`);
     }
 
-    if (pathname.startsWith("/auth/login") && token) {
+    if (
+      (pathname.startsWith("/auth/login") || 
+       pathname.startsWith("/auth/register")) && 
+      token
+    ) {
       return NextResponse.redirect(`${origin}`);
     }
   },
@@ -22,5 +26,5 @@ export default withAuth(
 );
 
 export const config = {
-  matcher: ["/dashboard/:path*", "/auth/login"],
+  matcher: ["/dashboard/:path*", "/auth/login", "/auth/register"],
 };

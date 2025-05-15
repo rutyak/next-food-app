@@ -25,6 +25,8 @@ const Body = ({
   const { location } = useContext<any>(VariableContext);
   const eventRef = useRef<any>(null);
 
+  console.log("lat: ", location?.lat, "long: ", location?.lng);
+
   const uniqueId = v4();
   // const toast = useToast();
   // const loc = useLocation();
@@ -47,7 +49,7 @@ const Body = ({
 
   useEffect(() => {
     getData();
-  }, []);
+  }, [location?.lat, location?.lng]);
 
   const handleInfiniteScroll = async () => {
     const scrollPosition =
@@ -63,7 +65,7 @@ const Body = ({
       setIsLoading(true);
       try {
         const res = await fetch(
-          `/api/restaurant?lat=${location.lat}&lng=${location.long}`
+          `/api/restaurant?lat=${location.lat}&lng=${location.lng}`
         );
 
         console.log(res);
@@ -98,9 +100,12 @@ const Body = ({
   }, []);
 
   async function getData() {
+
+    console.log("lat: ", location.lat, "lng: ", location.lng);
+    
     try {
       const res = await fetch(
-        `api/restaurant?lat=${location.lat}&lng=${location.long}`
+        `api/restaurant?lat=${location.lat}&lng=${location.lng}`
       );
       const data = await res.json();
 

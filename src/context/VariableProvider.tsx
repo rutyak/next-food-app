@@ -1,18 +1,29 @@
-import { useEffect, useState } from "react";
+"use client";
+
+import { useContext, useState } from "react";
 import VariableContext from "./VariableContext";
 
-const VariableProvider = ({children}: any) => {
+export const useVariables = () => {
+  return useContext(VariableContext);
+};
+
+export const VariableProvider = ({ children }: any) => {
   const [user, setUser] = useState(null);
-  const [location, setLocation] = useState({
-    lat: 13.0081,
-    long: 77.5648,
+  const [location, setLocation] = useState(() => {
+    if (typeof window !== "undefined") {
+      let storedLocation = localStorage.getItem("location");
+      return storedLocation
+        ? JSON.parse(storedLocation)
+        : {
+            lat: 13.0081,
+            lng: 77.5648,
+          };
+    }
   });
 
   return (
-    <VariableContext.Provider value={{ location, setLocation, user}}>
+    <VariableContext.Provider value={{ location, setLocation, user }}>
       {children}
     </VariableContext.Provider>
   );
 };
-
-export default VariableProvider;

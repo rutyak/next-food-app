@@ -3,16 +3,16 @@ import { createContext } from "react";
 interface VariableContextType {
     location: {
       lat: number;
-      long: number;
+      lng: number;
     };
-    setLocation: (location: { lat: number; long: number }) => void;
+    setLocation: (location: { lat: number; lng: number }) => void;
     user: any; 
   }
   
 const VariableContext = createContext<VariableContextType>({
     location: {
       lat: 13.0081,
-      long: 77.5648,
+      lng: 77.5648,
     },
     setLocation: () => {}, 
     user: null,

@@ -106,15 +106,6 @@
 @media (max-width: 439px) {
   .search {
     display: flex;
-    flex-direction: column-reverse;
-    top: 8.5rem;
-
-    Input {
-      box-shadow: none;
-      border-radius: 8px;
-      width: 355px;
-      height: 36px;
-    }
   }
 
   .searchList {
@@ -145,19 +136,6 @@
 }
 
 @media (max-width: 360px) {
-  .search {
-    display: flex;
-    flex-direction: column-reverse;
-    top: 8.5rem;
-
-    Input {
-      border-radius: 8px;
-      width: 325px;
-      height: 36px;
-      box-shadow: none;
-    }
-  }
-
   .accordian-panal-detect {
     img {
       width: 22px;

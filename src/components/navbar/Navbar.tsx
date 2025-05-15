@@ -4,15 +4,18 @@ import Link from "next/link";
 import VariableContext from "@/context/VariableContext";
 import Login from "@/container/auth/Login";
 import { Box } from "@chakra-ui/react";
+import { useSelector } from "react-redux";
 
 const Navbar = () => {
   const { user } = useContext<any>(VariableContext);
+
+  const cartAll = useSelector((state: any) => state.cart.cartItems);
 
   return (
     <ul className="navbar">
       <Box
         sx={{
-          gap: 4,
+          gap: 10,
           alignItems: "center",
           justifyContent: "center",
         }}
@@ -22,13 +25,13 @@ const Navbar = () => {
           <li>Home</li>
         </Link>
         <Link href="/about">
-          <li>About us</li>
+          <li>About</li>
         </Link>
         <Link href="/help">
           <li>Help</li>
         </Link>
         <Link href="/cart">
-          <li>Cart (4)</li>
+          <li>Cart ({cartAll.length})</li>
         </Link>
       </Box>
 

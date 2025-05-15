@@ -7,11 +7,11 @@ import { useSelector } from "react-redux";
 
 const Menu = () => {
 
-  // const cartAll = useSelector((state: any) => state.cart?.cartItems);
+  const cartAll = useSelector((state: any) => state.cart?.cartItems);
 
   return (
     <div className="menu">
-      <MenuNavbar cartLen={4} />
+      <MenuNavbar cartLen={cartAll?.length} />
       <Menubody />
     </div>
   );

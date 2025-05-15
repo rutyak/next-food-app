@@ -9,9 +9,12 @@ import {
   Stack,
   Text,
   Box,
+  Flex,
+  Divider,
 } from "@chakra-ui/react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { FaGoogle, FaGithub } from "react-icons/fa";
 import "./Style.scss";
 
 interface SignUpProps {
@@ -26,6 +29,7 @@ const SignUp: React.FC<SignUpProps> = ({ onClose }) => {
     confirmPassword: "",
   });
   const [isLoading, setIsLoading] = useState(false);
+  const [socialLoading, setSocialLoading] = useState<"google" | "github" | null>(null);
   const toast = useToast();
   const router = useRouter();
 
@@ -98,8 +102,21 @@ const SignUp: React.FC<SignUpProps> = ({ onClose }) => {
     }
   };
 
-  const handleSocialSignUp = async (provider: string) => {
-    await signIn(provider, { callbackUrl: "/dashboard" });
+  const handleSocialSignUp = async (provider: "google" | "github") => {
+    try {
+      setSocialLoading(provider);
+      await signIn(provider, { callbackUrl: "/dashboard" });
+    } catch (error) {
+      toast({
+        title: "Sign up failed",
+        description: "An error occurred during social sign up",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+    } finally {
+      setSocialLoading(null);
+    }
   };
 
   return (
@@ -114,6 +131,10 @@ const SignUp: React.FC<SignUpProps> = ({ onClose }) => {
               value={formData.name}
               onChange={handleChange}
               placeholder="John Doe"
+              bg="gray.800"
+              borderColor="gray.600"
+              _hover={{ borderColor: "gray.500" }}
+              _focus={{ borderColor: "orange.500", boxShadow: "none" }}
             />
           </FormControl>
 
@@ -125,6 +146,10 @@ const SignUp: React.FC<SignUpProps> = ({ onClose }) => {
               value={formData.email}
               onChange={handleChange}
               placeholder="your@email.com"
+              bg="gray.800"
+              borderColor="gray.600"
+              _hover={{ borderColor: "gray.500" }}
+              _focus={{ borderColor: "orange.500", boxShadow: "none" }}
             />
           </FormControl>
 
@@ -137,6 +162,10 @@ const SignUp: React.FC<SignUpProps> = ({ onClose }) => {
               onChange={handleChange}
               placeholder="••••••••"
               minLength={8}
+              bg="gray.800"
+              borderColor="gray.600"
+              _hover={{ borderColor: "gray.500" }}
+              _focus={{ borderColor: "orange.500", boxShadow: "none" }}
             />
           </FormControl>
 
@@ -148,12 +177,16 @@ const SignUp: React.FC<SignUpProps> = ({ onClose }) => {
               value={formData.confirmPassword}
               onChange={handleChange}
               placeholder="••••••••"
+              bg="gray.800"
+              borderColor="gray.600"
+              _hover={{ borderColor: "gray.500" }}
+              _focus={{ borderColor: "orange.500", boxShadow: "none" }}
             />
           </FormControl>
 
           <Box pt={2}>
             <Button
-              colorScheme="yellow"
+              colorScheme="orange"
               width="full"
               type="submit"
               isLoading={isLoading}
@@ -163,18 +196,36 @@ const SignUp: React.FC<SignUpProps> = ({ onClose }) => {
             </Button>
           </Box>
 
-          <Text textAlign="center" color="gray.500">
-            OR
-          </Text>
+          <Flex align="center" my={4}>
+            <Divider />
+            <Text px={2} color="gray.500">OR</Text>
+            <Divider />
+          </Flex>
 
-          <Button
-            colorScheme="gray"
-            width="full"
-            onClick={() => handleSocialSignUp("github")}
-            disabled={isLoading}
-          >
-            Sign up with GitHub
-          </Button>
+          <Stack spacing={3}>
+            <Button
+              leftIcon={<FaGoogle />}
+              variant="outline"
+              colorScheme="red"
+              onClick={() => handleSocialSignUp("google")}
+              isLoading={socialLoading === "google"}
+              loadingText="Signing up with Google"
+              disabled={isLoading}
+            >
+              Continue with Google
+            </Button>
+            <Button
+              leftIcon={<FaGithub />}
+              variant="outline"
+              colorScheme="gray"
+              onClick={() => handleSocialSignUp("github")}
+              isLoading={socialLoading === "github"}
+              loadingText="Signing up with GitHub"
+              disabled={isLoading}
+            >
+              Continue with GitHub
+            </Button>
+          </Stack>
         </Stack>
       </form>
     </TabPanel>
