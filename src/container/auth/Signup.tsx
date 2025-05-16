@@ -12,7 +12,6 @@ import {
   Flex,
   Divider,
 } from "@chakra-ui/react";
-import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { FaGoogle, FaGithub } from "react-icons/fa";
 import "./Style.scss";
@@ -70,17 +69,6 @@ const SignUp: React.FC<SignUpProps> = ({ onClose }) => {
         throw new Error(errorData.message || "Registration failed");
       }
 
-      // Auto-login after successful registration
-      const result = await signIn("credentials", {
-        redirect: false,
-        email: formData.email,
-        password: formData.password,
-      });
-
-      if (result?.error) {
-        throw new Error(result.error);
-      }
-
       toast({
         title: "Account created successfully!",
         status: "success",
@@ -105,7 +93,6 @@ const SignUp: React.FC<SignUpProps> = ({ onClose }) => {
   const handleSocialSignUp = async (provider: "google" | "github") => {
     try {
       setSocialLoading(provider);
-      await signIn(provider, { callbackUrl: "/dashboard" });
     } catch (error) {
       toast({
         title: "Sign up failed",

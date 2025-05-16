@@ -14,7 +14,6 @@ import {
   TabPanel,
   TabPanels,
   Tabs,
-  WrapItem,
   useDisclosure,
   useToast,
   Flex,
@@ -23,7 +22,6 @@ import {
 } from "@chakra-ui/react";
 import SignUp from "./Signup";
 import React, { useRef, useState } from "react";
-import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { FaGoogle, FaGithub } from "react-icons/fa";
 
@@ -33,13 +31,12 @@ const Login = () => {
   const toast = useToast();
   const router = useRouter();
 
-  const sessionAuth = useSession();
-  console.log("session: ", sessionAuth);
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [socialLoading, setSocialLoading] = useState<"google" | "github" | null>(null);
+  const [socialLoading, setSocialLoading] = useState<
+    "google" | "github" | null
+  >(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -56,37 +53,32 @@ const Login = () => {
       return;
     }
 
-    const result = await signIn("credentials", {
-      redirect: false,
-      email,
-      password,
-    });
+    try {
+      // Replace with your actual authentication API call
+      const response = await fetch("/api/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
 
-    if (result?.error) {
-      toast({
-        title: result.error,
-        status: "error",
-        duration: 3000,
-        isClosable: true,
-      });
-    } else {
-      toast({
-        title: "Login successful!",
-        status: "success",
-        duration: 3000,
-        isClosable: true,
-      });
+      const data = await response.json();
+      // Handle successful login (store token, redirect, etc.)
       router.push("/dashboard");
       onClose();
+    } catch (error) {
+      console.error("error: ", error);
+    } finally {
+      setIsLoading(false);
     }
-
-    setIsLoading(false);
   };
 
   const handleSocialSignIn = async (provider: "google" | "github") => {
     try {
       setSocialLoading(provider);
-      await signIn(provider, { callbackUrl: "/dashboard" });
+      // Replace with your social login implementation
+      window.location.href = `/api/auth/${provider}`;
     } catch (error) {
       toast({
         title: "Login failed",
@@ -102,16 +94,12 @@ const Login = () => {
 
   return (
     <>
-      <Button 
-        bg="sandybrown" 
-        onClick={onOpen}
-        _hover={{ bg: "darkorange" }}
-      >
+      <Button bg="sandybrown" onClick={onOpen} _hover={{ bg: "darkorange" }}>
         Login
       </Button>
-      <Modal 
-        finalFocusRef={finalRef} 
-        isOpen={isOpen} 
+      <Modal
+        finalFocusRef={finalRef}
+        isOpen={isOpen}
         onClose={onClose}
         size="md"
       >
@@ -119,8 +107,10 @@ const Login = () => {
         <ModalContent bg="black" color="white" borderRadius="lg">
           <Tabs isFitted variant="soft-rounded" colorScheme="orange">
             <TabList mb="1em" p={4}>
-              <Tab _selected={{ color: 'white', bg: 'orange.500' }}>Login</Tab>
-              <Tab _selected={{ color: 'white', bg: 'orange.500' }}>Sign Up</Tab>
+              <Tab _selected={{ color: "white", bg: "orange.500" }}>Login</Tab>
+              <Tab _selected={{ color: "white", bg: "orange.500" }}>
+                Sign Up
+              </Tab>
             </TabList>
             <TabPanels p={6}>
               <TabPanel>
@@ -159,11 +149,7 @@ const Login = () => {
                     <Checkbox colorScheme="orange" defaultChecked>
                       Remember me
                     </Checkbox>
-                    <Button 
-                      variant="link" 
-                      colorScheme="orange"
-                      size="sm"
-                    >
+                    <Button variant="link" colorScheme="orange" size="sm">
                       Forgot password?
                     </Button>
                   </HStack>
@@ -181,7 +167,9 @@ const Login = () => {
 
                   <Flex align="center" mb={6}>
                     <Divider />
-                    <Text px={2} color="gray.500">OR</Text>
+                    <Text px={2} color="gray.500">
+                      OR
+                    </Text>
                     <Divider />
                   </Flex>
 

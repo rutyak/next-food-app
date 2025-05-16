@@ -1,9 +1,9 @@
 "use client";
 
-import Footer from "@/container/footer/Footer";
-import Header from "@/container/home/header/Header";
-import Body from "@/container/home/body/Body";
 import { useState } from "react";
+import Body from "../container/home/body/Body";
+import Header from "../container/home/header/Header";
+import Footer from "../container/footer/Footer";
 
 export default function Home() {
   const [filteredCard, setFilteredCard] = useState<any>([]);
