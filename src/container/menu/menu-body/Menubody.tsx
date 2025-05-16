@@ -13,10 +13,6 @@ import { useParams, useRouter, useSearchParams } from "next/navigation";
 import React from "react";
 import { v4 } from "uuid";
 
-const Menu_url = process.env.NEXT_PUBLIC_MENU_API_URL;
-
-console.log("Menu_url: ", Menu_url);
-
 interface MenuQuery {
   id?: string;
 }
