@@ -5,6 +5,7 @@ import VariableContext from "@/context/VariableContext";
 import Login from "@/container/auth/Login";
 import { Box } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
+import MyDrawer from "../drawer/Drawer";
 
 const Navbar = () => {
   const { user } = useContext<any>(VariableContext);
@@ -35,8 +36,8 @@ const Navbar = () => {
         </Link>
       </Box>
 
-      {/* { user? <Drawer/> : <li><Login /></li>} */}
-      <Login />
+      { user? <MyDrawer/> : <li><Login /></li>}
+      {/* <Login /> */}
     </ul>
   );
 };

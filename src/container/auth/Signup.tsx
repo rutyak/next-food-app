@@ -14,7 +14,8 @@ import {
 } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
 import { FaGoogle, FaGithub } from "react-icons/fa";
-import "./Style.scss";
+import { signIn } from "next-auth/react";
+import bcrypt from "bcryptjs";
 
 interface SignUpProps {
   onClose: () => void;
@@ -51,8 +52,15 @@ const SignUp: React.FC<SignUpProps> = ({ onClose }) => {
         throw new Error("All fields are required");
       }
 
+      if (formData.password.length < 8) {
+        throw new Error("Password must be at least 8 characters");
+      }
+
+      // Hash password
+      const hashedPassword = await bcrypt.hash(formData.password, 12);
+
       // Register user
-      const response = await fetch("/api/auth/register", {
+      const response = await fetch("/api/auth/signup", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -60,13 +68,24 @@ const SignUp: React.FC<SignUpProps> = ({ onClose }) => {
         body: JSON.stringify({
           name: formData.name,
           email: formData.email,
-          password: formData.password,
+          password: hashedPassword,
         }),
       });
 
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(errorData.message || "Registration failed");
+      }
+
+      // Automatically sign in after registration
+      const result = await signIn("credentials", {
+        email: formData.email,
+        password: formData.password,
+        redirect: false,
+      });
+
+      if (result?.error) {
+        throw new Error(result.error);
       }
 
       toast({
@@ -76,7 +95,7 @@ const SignUp: React.FC<SignUpProps> = ({ onClose }) => {
         isClosable: true,
       });
 
-      router.push("/dashboard");
+      router.push("/");
       onClose();
     } catch (error: any) {
       toast({
@@ -93,6 +112,7 @@ const SignUp: React.FC<SignUpProps> = ({ onClose }) => {
   const handleSocialSignUp = async (provider: "google" | "github") => {
     try {
       setSocialLoading(provider);
+      await signIn(provider, { callbackUrl: "/" });
     } catch (error) {
       toast({
         title: "Sign up failed",
@@ -200,17 +220,6 @@ const SignUp: React.FC<SignUpProps> = ({ onClose }) => {
               disabled={isLoading}
             >
               Continue with Google
-            </Button>
-            <Button
-              leftIcon={<FaGithub />}
-              variant="outline"
-              colorScheme="gray"
-              onClick={() => handleSocialSignUp("github")}
-              isLoading={socialLoading === "github"}
-              loadingText="Signing up with GitHub"
-              disabled={isLoading}
-            >
-              Continue with GitHub
             </Button>
           </Stack>
         </Stack>

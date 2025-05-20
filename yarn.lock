@@ -27,7 +27,7 @@
     preact "10.11.3"
     preact-render-to-string "5.2.3"
 
-"@auth/core@^0.39.0":
+"@auth/core@0.39.1", "@auth/core@^0.39.0":
   version "0.39.1"
   resolved "https://registry.yarnpkg.com/@auth/core/-/core-0.39.1.tgz#2b42697154f29b9f8c4c76f6978ed94ea6e19219"
   integrity sha512-McD8slui0oOA1pjR5sPjLPl5Zm//nLP/8T3kr8hxIsvNLvsiudYvPHhDFPjh1KcZ2nFxCkZmP6bRxaaPd/AnLA==
@@ -37,6 +37,13 @@
     oauth4webapi "^3.3.0"
     preact "10.24.3"
     preact-render-to-string "6.5.11"
+
+"@auth/mongodb-adapter@^3.9.1":
+  version "3.9.1"
+  resolved "https://registry.yarnpkg.com/@auth/mongodb-adapter/-/mongodb-adapter-3.9.1.tgz#f731b541db3ce23f8c20e96faa521e388d638449"
+  integrity sha512-pzJSf1Ehs/wVrCJAFwQLiShw6+RZT23g2Ljpo4c/3iy6LDJhoTjlih9L8B0qCnK1Qv9xYZoQLwrXl6kMSyiHtg==
+  dependencies:
+    "@auth/core" "0.39.1"
 
 "@auth/nextjs@^0.0.0-380f8d56":
   version "0.0.0-380f8d56"
@@ -1526,7 +1533,7 @@ nanoid@^3.3.6, nanoid@^3.3.7, nanoid@^3.3.8:
   resolved "https://registry.yarnpkg.com/nanoid/-/nanoid-3.3.11.tgz#4f4f112cefbe303202f2199838128936266d185b"
   integrity sha512-N8SpfPUnUp1bK+PMYW8qSWdl9U+wwNWI4QKxOYDy9JAro3WMX7p2OeVRF9v+347pnakNevPmiHhNmZ2HbFA76w==
 
-next-auth@*:
+next-auth@*, next-auth@^4.24.11:
   version "4.24.11"
   resolved "https://registry.yarnpkg.com/next-auth/-/next-auth-4.24.11.tgz#16eeb76d37fbc8fe887561b454f8167f490c381f"
   integrity sha512-pCFXzIDQX7xmHFs4KVH4luCjaCbuPRtZ9oBUjUhOk84mZ9WVPf94n87TxYI4rSRf9HmfHEF8Yep3JrYDVOo3Cw==

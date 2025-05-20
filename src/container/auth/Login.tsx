@@ -2,7 +2,6 @@ import {
   Button,
   Input,
   Modal,
-  ModalCloseButton,
   ModalContent,
   FormControl,
   FormLabel,
@@ -19,11 +18,13 @@ import {
   Flex,
   Text,
   Divider,
+  Box,
 } from "@chakra-ui/react";
 import SignUp from "./Signup";
 import React, { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { FaGoogle, FaGithub } from "react-icons/fa";
+import { signIn } from "next-auth/react";
 
 const Login = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -33,6 +34,7 @@ const Login = () => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [rememberMe, setRememberMe] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [socialLoading, setSocialLoading] = useState<
     "google" | "github" | null
@@ -54,21 +56,31 @@ const Login = () => {
     }
 
     try {
-      // Replace with your actual authentication API call
-      const response = await fetch("/api/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
+      const result = await signIn("credentials", {
+        email,
+        password,
+        redirect: false,
+        callbackUrl: "/",
       });
 
-      const data = await response.json();
-      // Handle successful login (store token, redirect, etc.)
-      router.push("/dashboard");
+      if (result?.error) {
+        throw new Error(result.error);
+      }
+
+      if (result?.url) {
+        router.push(result.url);
+      } else {
+        router.push("/");
+      }
+
       onClose();
-    } catch (error) {
-      console.error("error: ", error);
+    } catch (error: any) {
+      toast({
+        title: error.message || "Login failed",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
     } finally {
       setIsLoading(false);
     }
@@ -77,8 +89,7 @@ const Login = () => {
   const handleSocialSignIn = async (provider: "google" | "github") => {
     try {
       setSocialLoading(provider);
-      // Replace with your social login implementation
-      window.location.href = `/api/auth/${provider}`;
+      await signIn(provider, { callbackUrl: "/" });
     } catch (error) {
       toast({
         title: "Login failed",
@@ -94,7 +105,12 @@ const Login = () => {
 
   return (
     <>
-      <Button bg="sandybrown" onClick={onOpen} _hover={{ bg: "darkorange" }}>
+      <Button
+        bg="sandybrown"
+        onClick={onOpen}
+        _hover={{ bg: "darkorange" }}
+        color="white"
+      >
         Login
       </Button>
       <Modal
@@ -102,17 +118,32 @@ const Login = () => {
         isOpen={isOpen}
         onClose={onClose}
         size="md"
+        isCentered
       >
-        <ModalOverlay />
-        <ModalContent bg="black" color="white" borderRadius="lg">
-          <Tabs isFitted variant="soft-rounded" colorScheme="orange">
-            <TabList mb="1em" p={4}>
-              <Tab _selected={{ color: "white", bg: "orange.500" }}>Login</Tab>
-              <Tab _selected={{ color: "white", bg: "orange.500" }}>
+        <ModalOverlay backdropFilter="blur(5px)" />
+        <ModalContent
+          bg="gray.900"
+          color="white"
+          borderRadius="lg"
+          border="1px"
+          borderColor="gray.700"
+        >
+          <Tabs isFitted variant="soft-rounded" colorScheme="orange" pb={3}>
+            <TabList p={4} display="flex" justifyItems="center" alignContent="center" gap={2}>
+              <Tab
+                _selected={{ color: "white", bg: "orange.500" }}
+                _hover={{ bg: "gray.700" }}
+              >
+                Login
+              </Tab>
+              <Tab
+                _selected={{ color: "white", bg: "orange.500" }}
+                _hover={{ bg: "gray.700" }}
+              >
                 Sign Up
               </Tab>
             </TabList>
-            <TabPanels p={6}>
+            <TabPanels px={6}>
               <TabPanel>
                 <form onSubmit={handleSubmit}>
                   <FormControl mb={4}>
@@ -126,7 +157,11 @@ const Login = () => {
                       bg="gray.800"
                       borderColor="gray.600"
                       _hover={{ borderColor: "gray.500" }}
-                      _focus={{ borderColor: "orange.500", boxShadow: "none" }}
+                      _focus={{
+                        borderColor: "orange.500",
+                        boxShadow: "0 0 0 1px orange.500",
+                      }}
+                      autoComplete="email"
                     />
                   </FormControl>
 
@@ -141,15 +176,36 @@ const Login = () => {
                       bg="gray.800"
                       borderColor="gray.600"
                       _hover={{ borderColor: "gray.500" }}
-                      _focus={{ borderColor: "orange.500", boxShadow: "none" }}
+                      _focus={{
+                        borderColor: "orange.500",
+                        boxShadow: "0 0 0 1px orange.500",
+                      }}
+                      autoComplete="current-password"
                     />
                   </FormControl>
 
                   <HStack justify="space-between" width="100%" mb={6}>
-                    <Checkbox colorScheme="orange" defaultChecked>
+                    <Checkbox
+                      colorScheme="orange"
+                      isChecked={rememberMe}
+                      onChange={(e) => setRememberMe(e.target.checked)}
+                    >
                       Remember me
                     </Checkbox>
-                    <Button variant="link" colorScheme="orange" size="sm">
+                    <Button
+                      variant="link"
+                      colorScheme="orange"
+                      size="sm"
+                      onClick={() => {
+                        toast({
+                          title: "Password reset",
+                          description: "Check your email for a reset link",
+                          status: "info",
+                          duration: 3000,
+                          isClosable: true,
+                        });
+                      }}
+                    >
                       Forgot password?
                     </Button>
                   </HStack>
@@ -161,16 +217,18 @@ const Login = () => {
                     isLoading={isLoading}
                     loadingText="Signing in..."
                     mb={6}
+                    size="lg"
+                    _hover={{ bg: "orange.600" }}
                   >
                     Login
                   </Button>
 
                   <Flex align="center" mb={6}>
-                    <Divider />
-                    <Text px={2} color="gray.500">
+                    <Divider borderColor="gray.600" />
+                    <Text px={2} color="gray.400" fontSize="sm">
                       OR
                     </Text>
-                    <Divider />
+                    <Divider borderColor="gray.600" />
                   </Flex>
 
                   <Flex direction="column" gap={3}>
@@ -181,28 +239,19 @@ const Login = () => {
                       onClick={() => handleSocialSignIn("google")}
                       isLoading={socialLoading === "google"}
                       loadingText="Signing in with Google"
+                      disabled={isLoading}
+                      _hover={{ bg: "gray.700" }}
                     >
                       Continue with Google
-                    </Button>
-                    <Button
-                      leftIcon={<FaGithub />}
-                      variant="outline"
-                      colorScheme="gray"
-                      onClick={() => handleSocialSignIn("github")}
-                      isLoading={socialLoading === "github"}
-                      loadingText="Signing in with GitHub"
-                    >
-                      Continue with GitHub
                     </Button>
                   </Flex>
                 </form>
               </TabPanel>
-              <TabPanel>
+              <TabPanel p={0}>
                 <SignUp onClose={onClose} />
               </TabPanel>
             </TabPanels>
           </Tabs>
-          <ModalCloseButton />
         </ModalContent>
       </Modal>
     </>

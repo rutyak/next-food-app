@@ -9,7 +9,7 @@ import * as menuFooter from "./MenuFooter.module.scss";
 import Shimmer from "@/components/shimmer-effect/Shimmer";
 import * as menuShimmerStyle from "@/components/shimmer-effect/MenuShimmer.module.scss";
 import VariableContext from "@/context/VariableContext";
-import { useParams, useRouter, useSearchParams } from "next/navigation";
+import { useParams } from "next/navigation";
 import React from "react";
 import { v4 } from "uuid";
 

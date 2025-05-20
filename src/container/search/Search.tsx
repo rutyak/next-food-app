@@ -34,6 +34,7 @@ const Search = ({
 }: SearchProps) => {
   const [resultList, setResultList] = useState<any[]>([]);
   const [isLocating, setIsLocating] = useState(false);
+  const [city, setCity] = useState("");
 
   const { setLocation } = useContext(VariableContext);
   const styles: any = searchStyles;
@@ -84,7 +85,9 @@ const Search = ({
             //   data.results[0]?.components?.village ||
             //   "Unknown location";
 
-            console.log("City:", data);
+            console.log("City:", data.results[0]?.components?.city);
+
+            setCity(data.results[0]?.components?.city);
 
             toast({
               title: "Location detected",
@@ -140,6 +143,7 @@ const Search = ({
         <CustomPopover
           text="Location"
           onDetectLocation={handleDetectLocation}
+          currentLocation={city}
         />
       </div>
 
