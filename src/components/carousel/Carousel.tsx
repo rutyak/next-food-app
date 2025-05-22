@@ -20,7 +20,7 @@ const Carousel = ({ suggestions, title }: any) => {
   return (
     <>
       <Box className="carousel-heading">
-        <Heading as="h2" fontSize="24px">
+        <Heading as="h2" fontSize={["xl","2xl"]}>
           {title}
         </Heading>
         <Box display="flex" gap="34px" zIndex="10 !important">

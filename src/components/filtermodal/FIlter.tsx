@@ -62,7 +62,6 @@ const Filter = ({ setFilteredCard, filteredCard, allCard }: any) => {
   return (
     <>
       <Box className="restaurant-grid-filter">
-        <Box display="flex" gap="10px">
           <Button
             colorScheme="teal"
             variant="outline"
@@ -87,8 +86,6 @@ const Filter = ({ setFilteredCard, filteredCard, allCard }: any) => {
           >
             Ratings 4.0+
           </Button>
-        </Box>
-        <Box display="flex" gap="10px">
           <Button
             colorScheme="teal"
             variant="outline"
@@ -105,7 +102,6 @@ const Filter = ({ setFilteredCard, filteredCard, allCard }: any) => {
           >
             Less than Rs.200
           </Button>
-        </Box>
       </Box>
     </>
   );

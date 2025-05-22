@@ -60,8 +60,8 @@ const MenuCard = ({
 
   return (
     <>
-      <Box className="item-card" p={4} overflow="hidden" height="224px">
-        <Box className="card-text" mb={4} w="72%">
+      <Box className="item-card" p={2} overflow="hidden" height="224px">
+        <Box className="card-text" mb={4}>
           <Box mb={2}>
             <Text fontSize="md" fontWeight="bold" color="#DD6B20">
               {isBestseller ? "Bestseller" : ""}
@@ -80,7 +80,7 @@ const MenuCard = ({
               </Text>
             </Heading>
           </Box>
-          <Box className="item-rating" mb={2} w="63px">
+          <Box className="item-rating" mb={2}>
             {Object.keys(ratings?.aggregatedRating).length !== 0 ? (
               <>
                 <img src={starIcon?.src} alt="rating" />
@@ -100,7 +100,7 @@ const MenuCard = ({
             color="gray"
           >
             <Text>
-              {isExpanded ? description : description?.substring(0, 90)}
+              {isExpanded ? description : description?.substring(0, 40)}
             </Text>
             {description?.length > 90 && (
               <Text
@@ -115,7 +115,7 @@ const MenuCard = ({
         </Box>
         {imageId ? (
           <>
-            <Box mr={5} className="item-img-btn" position="relative">
+            <Box className="item-img-btn" position="relative">
               <Image
                 src={`https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_300,h_300,c_fit/${imageId}`}
                 alt="img-card-menu"

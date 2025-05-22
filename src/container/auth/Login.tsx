@@ -19,11 +19,12 @@ import {
   Text,
   Divider,
   Box,
+  IconButton,
 } from "@chakra-ui/react";
 import SignUp from "./Signup";
 import React, { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import { FaGoogle, FaGithub } from "react-icons/fa";
+import { FaGoogle, FaGithub, FaTimes } from "react-icons/fa";
 import { signIn } from "next-auth/react";
 
 const Login = () => {
@@ -127,9 +128,31 @@ const Login = () => {
           borderRadius="lg"
           border="1px"
           borderColor="gray.700"
+          position="relative"
+          m="10px"
         >
+          <IconButton
+            aria-label="Close modal"
+            icon={<FaTimes />}
+            position="absolute"
+            top={1}
+            right={1}
+            size="sm"
+            variant="ghost"
+            color="white"
+            zIndex={10}
+            onClick={onClose}
+            _hover={{ bg: "gray.700" }}
+          />
           <Tabs isFitted variant="soft-rounded" colorScheme="orange" pb={3}>
-            <TabList p={4} display="flex" justifyItems="center" alignContent="center" gap={2}>
+            <TabList
+              p={4}
+              display="flex"
+              justifyItems="center"
+              alignContent="center"
+              gap={2}
+              mt={6}
+            >
               <Tab
                 _selected={{ color: "white", bg: "orange.500" }}
                 _hover={{ bg: "gray.700" }}

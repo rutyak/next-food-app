@@ -2,9 +2,9 @@ import React, { useContext } from 'react';
 import * as homeFooter from './Footer.module.scss';
 import { Text } from '@chakra-ui/react';
 
-const Footer = ({menuFooter}: any) => {
+const Footer = () => {
 
-  const styles = menuFooter || homeFooter;
+  const styles: any = homeFooter;
 
   return (
     <footer className={styles.footer}>

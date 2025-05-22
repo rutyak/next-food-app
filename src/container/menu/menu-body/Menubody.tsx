@@ -43,9 +43,7 @@ const Menubody = () => {
       console.log("menu cards: ", data);
       setMenu(data?.data?.data?.cards);
       const menuFetched =
-        window.innerWidth > 884
-          ? data?.data?.data?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards
-          : data?.data?.data?.cards[5]?.groupedCard?.cardGroupMap?.REGULAR?.cards;
+        data?.data?.data?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards;
       setMenuOpt(menuFetched);
       console.log(
         "menu card",
@@ -135,7 +133,7 @@ const Menubody = () => {
           </>
         </Box>
       </div>
-      <Footer menuFooter={menuFooter} />
+      <Footer/>
     </>
   );
 };

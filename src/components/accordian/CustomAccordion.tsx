@@ -21,7 +21,7 @@ const CustomAccordion = ({title, itemCards}: any) => {
             <AccordionIcon />
           </AccordionButton>
         </h2>
-        <AccordionPanel pb={4}>
+        <AccordionPanel  pb={4}>
           {itemCards?.length > 0 &&
             itemCards?.map((card: any) => {
               return <MenuCard key={card?.card?.info?.id} {...card?.card?.info} />;

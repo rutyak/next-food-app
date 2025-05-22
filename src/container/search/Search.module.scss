@@ -15,12 +15,12 @@
     height: 41px;
     padding-left: 43px;
 
-    &:focus{
+    &:focus {
       border-color: green;
     }
   }
 
-  Input::placeholder{
+  Input::placeholder {
     font-size: 14px;
   }
 
@@ -50,9 +50,15 @@
   }
 
   @media (max-width: 780px) {
-     Input{
-      width: 300px;
-     }
+    Input {
+      width: 400px;
+    }
+  }
+
+  @media (max-width: 780px) {
+    Input {
+      width: 200px;
+    }
   }
 }
 

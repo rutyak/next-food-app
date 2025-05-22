@@ -9,7 +9,8 @@
   background-image: url("../../../assets/back-5.jpg");
   background-repeat: no-repeat;
   background-attachment: fixed;
-  background-size: 100% 77%;
+  background-position: center;
+  background-size: cover;
 }
 
 .top {
@@ -65,8 +66,14 @@
   }
 }
 
-@media (min-width: 480px) {
+@media (max-width: 480px) {
   .burger {
     visibility: hidden;
+  }
+
+  .title {
+    h2 {
+      margin-top: 56px;
+    }
   }
 }

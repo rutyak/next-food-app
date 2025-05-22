@@ -154,7 +154,7 @@ const Body = ({
         " "
       )}
       <Box mt="1rem" className="grid-card-heading">
-        <Heading as="h2" fontSize="24px" mb="1rem">
+        <Heading as="h2" fontSize={["xl","2xl"]} mb="1rem">
           {data?.cards[2]?.card?.card?.title}
         </Heading>
         <Filter

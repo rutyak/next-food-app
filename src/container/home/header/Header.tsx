@@ -29,10 +29,10 @@ const Header = ({ setFilteredCard, setSearch, search, allCard }: any) => {
         <div style={{ display: "flex", alignItems: "center" }}>
           <Navbar />
           <HamburgerIcon
-            width={7} 
+            width={7}
             height={9}
             color="white"
-            display={{ base: "block", md: "none" }} 
+            display={{ base: "block", md: "none" }}
             ml={1}
             mr={3}
             cursor="pointer"
@@ -40,7 +40,7 @@ const Header = ({ setFilteredCard, setSearch, search, allCard }: any) => {
         </div>
       </div>
       <div className="title">
-        <Heading as="h2" size="3xl" style={{ fontSize: "40px" }}>
+        <Heading as="h2" fontSize={["3xl", "4xl", "5xl"]}>
           Food Bazaar
         </Heading>
         <Search

@@ -17,7 +17,7 @@ const MenuNavbar = ({ cart, cartLen }: any) => {
       <div className="menu-inner-header">
         <Box
           className="menu-title"
-          display="flex"
+          display={{ base: "none", md: "flex" }}
           justifyContent="center"
           alignItems="center"
           py={3}
@@ -30,7 +30,7 @@ const MenuNavbar = ({ cart, cartLen }: any) => {
             color="teal.500"
             textAlign="center"
             onClick={() => router.push("/")}
-            sx={{ cursor: "pointer"}}
+            sx={{ cursor: "pointer" }}
           >
             Food
             <Box as="span" color="green.500">
@@ -38,7 +38,7 @@ const MenuNavbar = ({ cart, cartLen }: any) => {
             </Box>
           </Heading>
         </Box>
-        <Box display="flex" gap="25px" alignItems="center">
+        <Box display="flex" gap="25px" alignItems="center" justifyContent="end">
           {!cart && (
             <Button
               colorScheme="teal"
